@@ -1,0 +1,26 @@
+{
+  "name": "sudoku-challenge",
+  "version": "1.0.0",
+  "description": "job interview challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mubasharkk/Sudoku-challenge.git"
+  },
+  "keywords": [
+    "sudoku",
+    "test",
+    "job",
+    "algorithm"
+  ],
+  "author": "Mubashar Khokhar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mubasharkk/Sudoku-challenge/issues"
+  },
+  "homepage": "https://github.com/mubasharkk/Sudoku-challenge#readme"
+}
