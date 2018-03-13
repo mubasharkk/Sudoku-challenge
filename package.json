@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index"
+    "start": "babel-node --presets es2015 index.js"
   },
   "repository": {
     "type": "git",
@@ -17,10 +17,17 @@
     "job",
     "algorithm"
   ],
+  "dependencies": {
+    "babel-cli": "^6.0.0",
+    "babel-preset-es2015": "^6.0.0"
+  },
   "author": "Mubashar Khokhar",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mubasharkk/Sudoku-challenge/issues"
   },
-  "homepage": "https://github.com/mubasharkk/Sudoku-challenge#readme"
+  "homepage": "https://github.com/mubasharkk/Sudoku-challenge#readme",
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.40"
+  }
 }
