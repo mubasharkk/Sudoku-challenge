@@ -10,8 +10,8 @@ class Board {
 
     _createCells(data) {
         let _grid = [];
-        for(let row in data){
-            for(let col in data[row]) {
+        for (let row in data) {
+            for (let col in data[row]) {
                 let value = data[row][col];
                 _grid.push(
                     new Cell(row, col, this._getBoxId(row, col), value, value == null)
@@ -19,35 +19,74 @@ class Board {
             }
         }
         return _grid;
+
+
     }
 
     _getBoxId(row, col) {
-        return row + 'x' + col;
+        return Math.floor(row/3) + 'x' + Math.floor(col/3);
     }
 
     findPossibilities() {
         let self = this;
         this._grid.forEach(cell => {
-            let possibleValues = [1, 2, 3, 4];
-            if(cell.isEmpty()) {
-                this._grid.forEach(cellCompare => {
-                    if (cellCompare.row() === cell.row() || cell.column() == cellCompare.column()) {
-                        possibleValues = possibleValues.filter(x => cellCompare.getValue() !== x);
+            let possibleValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+            if (cell.isEmpty()) {
+                this._grid.forEach(comparedCell => {
+                    if(this.eliminatePossibility(cell, comparedCell) && cell !== comparedCell) {
+                        possibleValues = possibleValues.filter(x => comparedCell.getValue() !== x);
                     }
                 });
-
-                if(possibleValues.length > 1) {
-                    cell.addPossibility(possibleValues);
-                } else {
-                    cell.setValue(possibleValues[0]);
-                    this.findPossibilities();
-                }
+                cell.addPossibility(possibleValues);
             }
         });
     }
 
+    eliminatePossibility(cell, comparedCell) {
+        if(comparedCell.isEmpty()) {
+            return false;
+        }
+
+        if (cell.row() === comparedCell.row() ||
+            cell.column() === comparedCell.column()  || cell.boxId() === comparedCell.boxId()
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    isCompleted() {
+        for (let i in this._grid) {
+            if (this._grid[i].isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     output() {
-        console.log(this._grid);
+        let grid = [];
+        this._grid.forEach(cell => {
+            let name = 'R' + cell.row();
+            if (grid[name] === undefined) {
+                grid [name] = [];
+            }
+            grid[name].push(cell.getValue());
+        });
+
+        console.log(grid);
+    }
+
+    solve() {
+        this.findPossibilities();
+
+        this._grid.forEach(currentCell => {
+            if (currentCell.isEmpty() && currentCell.canAssignValue()) {
+                currentCell.setValue();
+            }
+        })
+
     }
 }
 

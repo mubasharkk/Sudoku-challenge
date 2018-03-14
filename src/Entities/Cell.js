@@ -38,8 +38,8 @@ class Cell {
         this._possibilities = values;
     }
 
-    getFirstPossibleValue(value) {
-        this._possibilities.splice(this._possibilities.indexOf(value), 1);
+    getFirstPossibleValue() {
+        return this._possibilities[0];
     }
 
     isEmpty() {
