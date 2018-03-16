@@ -10,12 +10,8 @@ class Cell {
         this._possibilities = [];
     }
 
-    getValue() {
-        return this._value;
-    }
-
-    setValue(value) {
-        this._value = value;
+    value(val) {
+        return this._value = (val === undefined) ? this._value : val;
     }
 
     column() {
@@ -43,7 +39,7 @@ class Cell {
     }
 
     isEmpty() {
-        return this.getValue() === null || this.getValue() === '';
+        return this.value() === null || this.value() === '';
     }
 }
 

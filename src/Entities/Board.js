@@ -31,10 +31,10 @@ class Board {
         let self = this;
         this._grid.forEach(cell => {
             let possibleValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-            if (cell.isEmpty()) {
+            if(cell.isEmpty()) {
                 this._grid.forEach(comparedCell => {
-                    if(this.eliminatePossibility(cell, comparedCell) && cell !== comparedCell) {
-                        possibleValues = possibleValues.filter(x => comparedCell.getValue() !== x);
+                    if (this.isComparable(cell, comparedCell) && !comparedCell.isEmpty()) {
+                        possibleValues = possibleValues.filter( x => comparedCell.value() !== x);
                     }
                 });
                 cell.addPossibility(possibleValues);
@@ -42,18 +42,10 @@ class Board {
         });
     }
 
-    eliminatePossibility(cell, comparedCell) {
-        if(comparedCell.isEmpty()) {
-            return false;
-        }
-
-        if (cell.row() === comparedCell.row() ||
-            cell.column() === comparedCell.column()  || cell.boxId() === comparedCell.boxId()
-        ) {
-            return true;
-        }
-
-        return false;
+    isComparable(cell, comparedCell) {
+        return  comparedCell.row() === cell.row() ||
+                comparedCell.column() === cell.column() ||
+                comparedCell.boxId() === cell.boxId();
     }
 
     isCompleted() {
@@ -72,7 +64,7 @@ class Board {
             if (grid[name] === undefined) {
                 grid [name] = [];
             }
-            grid[name].push(cell.getValue());
+            grid[name].push(cell.value());
         });
 
         console.log(grid);
@@ -82,11 +74,11 @@ class Board {
         this.findPossibilities();
 
         this._grid.forEach(currentCell => {
-            if (currentCell.isEmpty() && currentCell.canAssignValue()) {
-                currentCell.setValue();
+            if (currentCell.isEmpty()) {
+                currentCell.value(currentCell.getFirstPossibleValue());
+                this.findPossibilities();
             }
-        })
-
+        });
     }
 }
 
